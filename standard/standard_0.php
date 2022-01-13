@@ -29,19 +29,18 @@ class php_user_filter
 
     /**
      * @link https://php.net/manual/ru/php-user-filter.filter.php
-     * @param resource $in <p> is a resource pointing to a <i>bucket brigade</i< which contains one or more <i>bucket</i> objects containing data to be filtered.</p>
-     * @param resource $out <p>is a resource pointing to a second bucket brigade into which your modified buckets should be placed.</p>
-     * @param int &$consumed <p>which must <i>always</i> be declared by reference, should be incremented by the length of the data which your filter reads in and alters. In most cases this means you will increment consumed by <i>$bucket->datalen</i> for each <i>$bucket</i>.</p>
-     * @param bool $closing <p>If the stream is in the process of closing (and therefore this is the last pass through the filterchain), the closing parameter will be set to <b>TRUE</b>
+     * @param resource $in <p> ресурс, указывающий на bucket brigade, которая содержит один или несколько объектов bucket содержащих фильтруемые данные.</p>
+     * @param resource $out <p> ресурс, указывающий на другой объект bucket brigade, в который будут помещаться модифицированные бакеты.</p>
+     * @param int &$consumed <p> который должен <i>всегда </i> передаваться по ссылке, должен увеличиваться на размер данных, которые фильтр читает и изменяет. В большинстве случаев это значит, что Вы сами будете увеличивать значение consumed на <i>$bucket->datalen</i> для каждого <i>$bucket</i>.</p>
+     * @param bool $closing <p> Если поток закрывается (следовательно, это последний фильтр в цепочке), аргумент closing примет значение <b>TRUE</b>
      * @return int <p>
-     * The <b>filter()</b> method must return one of
-     * three values upon completion.
+     * Метод <b>filter()</b> должен возвращать одно из трёх значений.
      * </p><table>
      *
      * <thead>
      * <tr>
-     * <th>Return Value</th>
-     * <th>Meaning</th>
+     * <th>Возвращаемое значение</th>
+     * <th>Описание</th>
      * </tr>
      *
      * </thead>
@@ -50,7 +49,7 @@ class php_user_filter
      * <tr>
      * <td><b>PSFS_PASS_ON</b></td>
      * <td>
-     * Filter processed successfully with data available in the
+     * Фильтр отработал успешно, данные доступны через аргумент
      * <code class="parameter">out</code> <em>bucket brigade</em>.
      * </td>
      * </tr>
@@ -58,15 +57,15 @@ class php_user_filter
      * <tr>
      * <td><b>PSFS_FEED_ME</b></td>
      * <td>
-     * Filter processed successfully, however no data was available to
-     * return. More data is required from the stream or prior filter.
+     * Фильтр отработал успешно, однако доступных для вывода данных нет.
+     * Требуются ещё данные из потока или предыдущего фильтра.
      * </td>
      * </tr>
      *
      * <tr>
      * <td><b>PSFS_ERR_FATAL</b> (default)</td>
      * <td>
-     * The filter experienced an unrecoverable error and cannot continue.
+     * Фильтр вызвал необрабатываемую ошибку и не может продолжить выполнение.
      * </td>
      * </tr>
      */
@@ -98,20 +97,20 @@ class php_user_filter
 class Directory
 {
     /**
-     * @var string The directory that was opened.
+     * @var string Каталог, который был открыт.
      */
     #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
     public $path;
 
     /**
-     * @var resource Can be used with other directory functions such as {@see readdir()}, {@see rewinddir()} and {@see closedir()}.
+     * @var resource Может использоваться с другими функциями каталога, такими как {@see readdir()}, {@see rewinddir()} и {@see closedir()}.
      */
     #[LanguageLevelTypeAware(['8.1' => 'mixed'], default: '')]
     public $handle;
 
     /**
-     * Close directory handle.
-     * Same as closedir(), only dir_handle defaults to $this.
+     * Закрывает дескриптор каталога
+     * То же, что и closedir(), только dir_handle по умолчанию имеет значение $this.
      * @param resource $dir_handle [optional]
      * @link https://secure.php.net/manual/ru/directory.close.php
      */
@@ -119,8 +118,8 @@ class Directory
     public function close(#[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] $dir_handle = null): void {}
 
     /**
-     * Rewind directory handle.
-     * Same as rewinddir(), only dir_handle defaults to $this.
+     * Перемещает дескриптор каталога в начало каталога
+     * То же, что и rewinddir(), только dir_handle по умолчанию равен $this.
      * @param resource $dir_handle [optional]
      * @link https://secure.php.net/manual/ru/directory.rewind.php
      */
@@ -128,8 +127,8 @@ class Directory
     public function rewind(#[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] $dir_handle = null): void {}
 
     /**
-     * Read entry from directory handle.
-     * Same as readdir(), only dir_handle defaults to $this.
+     * Получает элемент из дескриптора каталога
+     * То же, что и readdir(), только dir_handle по умолчанию имеет значение $this.
      * @param resource $dir_handle [optional]
      * @return string|false
      * @link https://secure.php.net/manual/ru/directory.read.php
@@ -139,141 +138,139 @@ class Directory
 }
 
 /**
- * Returns the value of a constant
+ * Возвращает значение константы
  * @link https://php.net/manual/ru/function.constant.php
  * @param string $name <p>
- * The constant name.
+ * Имя константы.
  * </p>
- * @return mixed the value of the constant, or null if the constant is not
- * defined.
+ * @return mixed Возвращает значение константы, или null, если константа не определена.
  */
 #[Pure]
 function constant(string $name): mixed {}
 
 /**
- * Convert binary data into hexadecimal representation
+ * Преобразует бинарные данные в шестнадцатеричное представление
  * @link https://php.net/manual/ru/function.bin2hex.php
  * @param string $string <p>
- * A character.
+ * Строка.
  * </p>
- * @return string the hexadecimal representation of the given string.
+ * @return string Возвращает шестнадцатеричное представление указанной строки.
  */
 #[Pure]
 function bin2hex(string $string): string {}
 
 /**
- * Delay execution
+ * Задержка выполнения
  * @link https://php.net/manual/ru/function.sleep.php
  * @param int $seconds <p>
- * Halt time in seconds.
+ * Время остановки в секундах.
  * </p>
- * @return int|false zero on success, or false on errors. If the call was interrupted
- * by a signal, sleep returns the number of seconds left
- * to sleep.
+ * @return int|false Возвращает 0 в случае успешного выполнения или false в случае возникновения ошибки.
+ * <p>
+ * Если вызов был прерван сигналом, функция sleep() возвратит значение, не равное нулю. В Windows это значение всегда будет равно 192
+ * (значение константы Windows API WAIT_IO_COMPLETION). На других платформах возвращаемом значением будет количество секунд, оставшихся до задержки.
+ * </p>
  */
 #[LanguageLevelTypeAware(["8.0" => "int"], default: "int|false")]
 function sleep(int $seconds) {}
 
 /**
- * Delay execution in microseconds
+ * Задержка выполнения в микросекундах
  * @link https://php.net/manual/ru/function.usleep.php
  * @param int $microseconds <p>
- * Halt time in micro seconds. A micro second is one millionth of a
- * second.
+ * Время откладываемого исполнения в микросекундах. Микросекунда - это одна миллионная секунды.
  * </p>
  * @return void
  */
 function usleep(int $microseconds): void {}
 
 /**
- * Delay for a number of seconds and nanoseconds
+ * Задержка на заданное число секунд и наносекунд
  * @link https://php.net/manual/ru/function.time-nanosleep.php
  * @param int $seconds <p>
- * Must be a positive integer.
+ * Должно быть целым положительным числом.
  * </p>
  * @param int $nanoseconds <p>
- * Must be a positive integer less than 1 billion.
+ * Должно быть целым положительным числом, меньшим одного миллиарда.
  * </p>
- * @return bool|array true on success or false on failure.
+ * @return bool|array Возвращает true в случае успешного выполнения или false в случае возникновения ошибки.
  * <p>
- * If the delay was interrupted by a signal, an associative array will be
- * returned with the components:
- * seconds - number of seconds remaining in
- * the delay
- * nanoseconds - number of nanoseconds
- * remaining in the delay
+ * Если отложенное исполнение было прервано сигналом, то возвращается ассоциативный массив со следующими компонентами:
+ * seconds - число оставшихся секунд
+ * nanoseconds - число оставшихся наносекунд
  * </p>
  */
 function time_nanosleep(int $seconds, int $nanoseconds): array|bool {}
 
 /**
- * Make the script sleep until the specified time
+ * Откладывает исполнение скрипта до заданного времени
  * @link https://php.net/manual/ru/function.time-sleep-until.php
  * @param float $timestamp <p>
- * The timestamp when the script should wake.
+ * Временная метка продолжения исполнения скрипта.
  * </p>
- * @return bool true on success or false on failure.
+ * @return bool Возвращает true в случае успешного выполнения или false в случае возникновения ошибки.
  */
 function time_sleep_until(float $timestamp): bool {}
 
 /**
- * Parse a time/date generated with <function>strftime</function>
+ * Разбирает строку даты/времени, сгенерированную функцией <function>strftime</function>
  * @link https://php.net/manual/ru/function.strptime.php
  * @param string $timestamp <p>
- * The string to parse (e.g. returned from strftime)
+ * Строка для разбора (например, строковый результат выполнения функции strftime)
  * </p>
  * @param string $format <p>
- * The format used in date (e.g. the same as
- * used in strftime).
+ * Формат строки timestamp (например, формат, используемый в функции strftime).
  * </p>
  * <p>
- * For more information about the format options, read the
- * strftime page.
+ * Следует обратить внимание на тот факт, что не все возможности форматирования используемые в strftime() будут обрабатываться в strptime();
+ * набор поддерживаемых символов форматирования зависит от ОС и используемой С-библиотеки.
  * </p>
- * @return array|false an array or false on failure.
+ * <p>
+ * За дополнительной информацией о возможностях форматирования обращайтесь на страницу описания функции strftime().
+ * </p>
+ * @return array|false Возвращает массив или false в случае возникновения ошибки.
  * <p>
  * <table>
- * The following parameters are returned in the array
+ * Список элементов возвращаемого массива
  * <tr valign="top">
- * <td>parameters</td>
- * <td>Description</td>
+ * <td>параметры</td>
+ * <td>Описание</td>
  * </tr>
  * <tr valign="top">
  * <td>"tm_sec"</td>
- * <td>Seconds after the minute (0-61)</td>
+ * <td>Секунды после минут (0-61)</td>
  * </tr>
  * <tr valign="top">
  * <td>"tm_min"</td>
- * <td>Minutes after the hour (0-59)</td>
+ * <td>Минуты после часов (0-59)</td>
  * </tr>
  * <tr valign="top">
  * <td>"tm_hour"</td>
- * <td>Hour since midnight (0-23)</td>
+ * <td>Часы после полуночи (0-23)</td>
  * </tr>
  * <tr valign="top">
  * <td>"tm_mday"</td>
- * <td>Day of the month (1-31)</td>
+ * <td>День месяца (1-31)</td>
  * </tr>
  * <tr valign="top">
  * <td>"tm_mon"</td>
- * <td>Months since January (0-11)</td>
+ * <td>Месяцы после января (0-11)</td>
  * </tr>
  * <tr valign="top">
  * <td>"tm_year"</td>
- * <td>Years since 1900</td>
+ * <td>Годы после 1900</td>
  * </tr>
  * <tr valign="top">
  * <td>"tm_wday"</td>
- * <td>Days since Sunday (0-6)</td>
+ * <td>Дни после воскресенья (0-6)</td>
  * </tr>
  * <tr valign="top">
  * <td>"tm_yday"</td>
- * <td>Days since January 1 (0-365)</td>
+ * <td>Дни после 1-го января (0-365)</td>
  * </tr>
  * <tr valign="top">
  * <td>"unparsed"</td>
- * <td>the date part which was not
- * recognized using the specified format</td>
+ * <td>Часть timestamp, которую не удалось распознать в соответствии с format</td>
  * </tr>
  * </table>
  * </p>
@@ -284,52 +281,51 @@ function time_sleep_until(float $timestamp): bool {}
 function strptime(string $timestamp, string $format): array|false {}
 
 /**
- * Flush the output buffer
+ * Сброс системного буфера вывода
  * @link https://php.net/manual/ru/function.flush.php
  * @return void
  */
 function flush(): void {}
 
 /**
- * Wraps a string to a given number of characters
+ * Переносит строку по указанному количеству символов
  * @link https://php.net/manual/ru/function.wordwrap.php
  * @param string $string <p>
- * The input string.
+ * Входная строка.
  * </p>
  * @param int $width [optional] <p>
- * The column width.
+ * Количество символов, по которым строка будет перенесена.
  * </p>
  * @param string $break [optional] <p>
- * The line is broken using the optional
- * break parameter.
+ * Символ переноса строки можно указать с помощью необязательного параметра break.
  * </p>
  * @param bool $cut_long_words [optional] <p>
- * If the cut is set to true, the string is
- * always wrapped at or before the specified width. So if you have
- * a word that is larger than the given width, it is broken apart.
- * (See second example).
+ * Если параметр cut_long_words установлен в true, строка всегда будет переноситься на указанной ширине width или раньше.
+ * Поэтому, если исходная строка содержит слово длиннее заданной ширины строки, то оно будет разорвано. (Смотрите второй пример).
+ * Если установлен в false, функция не разделяет слово, даже если width меньше длины слова.
  * </p>
- * @return string the given string wrapped at the specified column.
+ * @return string Возвращает строку со вставленными символами переноса на указанной длине.
  */
 #[Pure]
 function wordwrap(string $string, int $width = 75, string $break = "\n", bool $cut_long_words = false): string {}
 
 /**
- * Convert special characters to HTML entities
+ * Преобразует специальные символы в HTML-сущности
  * @link https://php.net/manual/ru/function.htmlspecialchars.php
  * @param string $string <p>
- * The {@link https://secure.php.net/manual/ru/language.types.string.php string} being converted.
+ * Конвертируемая {@link https://secure.php.net/manual/ru/language.types.string.php строка}.
  * </p>
  * @param int $flags [optional] <p>
- * A bitmask of one or more of the following flags, which specify how to handle quotes,
- * invalid code unit sequences and the used document type. The default is
+ * Битовая маска из нижеуказанных флагов, определяющих режим обработки кавычек,
+ * некорректных кодовых последовательностей и используемый тип документа.
+ * По умолчанию используется
  * <em><b>ENT_COMPAT | ENT_HTML401</b></em>.
  * </p><table>
- * <caption><b>Available <em>flags</em> constants</b></caption>
+ * <caption><b>Доступные значения параметра <em>flags</em></b></caption>
  * <thead>
  * <tr>
- * <th>Constant Name</th>
- * <th>Description</th>
+ * <th>Название константы</th>
+ * <th>Описание</th>
  * </tr>
  *
  * </thead>
@@ -337,72 +333,70 @@ function wordwrap(string $string, int $width = 75, string $break = "\n", bool $c
  * <tbody>
  * <tr>
  * <td><b>ENT_COMPAT</b></td>
- * <td>Will convert double-quotes and leave single-quotes alone.</td>
+ * <td>Преобразует двойные кавычки, одинарные кавычки не изменяются.</td>
  * </tr>
  *
  * <tr>
  * <td><b>ENT_QUOTES</b></td>
- * <td>Will convert both double and single quotes.</td>
+ * <td>Преобразует как двойные, так и одинарные кавычки.</td>
  * </tr>
  *
  * <tr>
  * <td><b>ENT_NOQUOTES</b></td>
- * <td>Will leave both double and single quotes unconverted.</td>
+ * <td>Оставляет без изменения как двойные, так и одинарные кавычки.</td>
  * </tr>
  *
  * <tr>
  * <td><b>ENT_IGNORE</b></td>
  * <td>
- * Silently discard invalid code unit sequences instead of returning
- * an empty string. Using this flag is discouraged as it
- * {@link https://unicode.org/reports/tr36/#Deletion_of_Noncharacters »&nbsp;may have security implications}.
+ * Без всяких уведомительных сообщений отбрасывает некорректные кодовые последовательности вместо возврата пустой строки.
+ * Использование этого флага не рекомендуется, так как это может привести к
+ * {@link https://unicode.org/reports/tr36/#Deletion_of_Noncharacters » негативным последствиям, связанным с безопасностью}.
  * </td>
  * </tr>
  *
  * <tr>
  * <td><b>ENT_SUBSTITUTE</b></td>
  * <td>
- * Replace invalid code unit sequences with a Unicode Replacement Character
- * U+FFFD (UTF-8) or &amp;#FFFD; (otherwise) instead of returning an empty string.
+ * Заменяет некорректные кодовые последовательности символом замены Юникода U+FFFD
+ * в случае использования UTF-8 или &amp;#FFFD; при использовании другой кодировки, вместо возврата пустой строки.
  * </td>
  * </tr>
  *
  * <tr>
  * <td><b>ENT_DISALLOWED</b></td>
  * <td>
- * Replace invalid code points for the given document type with a
- * Unicode Replacement Character U+FFFD (UTF-8) or &amp;#FFFD;
- * (otherwise) instead of leaving them as is. This may be useful, for
- * instance, to ensure the well-formedness of XML documents with
- * embedded external content.
+ * Заменяет неверные коды символов для заданного типа документа символом замены юникода U+FFFD (UTF-8) или &amp;#FFFD;
+ * (при использовании другой кодировки) вместо того, чтобы оставлять все как есть. Это может быть полезно, например,
+ * для того, чтобы убедиться в формальной правильности XML-документов со встроенным внешним контентом.
  * </td>
  * </tr>
  *
  * <tr>
  * <td><b>ENT_HTML401</b></td>
  * <td>
- * Handle code as HTML 4.01.
+ * Обработка кода в соответствии с HTML 4.01.
  * </td>
  * </tr>
  *
  * <tr>
  * <td><b>ENT_XML1</b></td>
  * <td>
- * Handle code as XML 1.
+ * Обработка кода в соответствии с XML 1.
  * </td>
  * </tr>
  *
  * <tr>
  * <td><b>ENT_XHTML</b></td>
  * <td>
- * Handle code as XHTML.
+ * Обработка кода в соответствии с XHTML.
  * </td>
  * </tr>
  *
  * <tr>
  * <td><b>ENT_HTML5</b></td>
  * <td>
- * Handle code as HTML 5.
+ * Обработка кода в соответствии с HTML 5.
  * </td>
  * </tr>
  *
@@ -410,182 +404,312 @@ function wordwrap(string $string, int $width = 75, string $break = "\n", bool $c
  *
  * </table>
  * @param string|null $encoding [optional] <p>
- * Defines encoding used in conversion.
- * If omitted, the default value for this argument is ISO-8859-1 in
- * versions of PHP prior to 5.4.0, and UTF-8 from PHP 5.4.0 onwards.
+ * Необязательный аргумент, определяющий кодировку, используемую при конвертации символов.
+ * Для целей этой функции кодировки ISO-8859-1, ISO-8859-15, UTF-8, cp866, cp1251, cp1252 и KOI8-R являются практически эквивалентными,
+ * предполагая то, что сама строка string содержит корректные символы в указанной кодировке, то символы, изменяемые htmlspecialchars(),
+ * останутся на тех же местах во всех этих кодировках.
  * </p>
  * <p>
- * For the purposes of this function, the encodings
+ * Поддерживаются следующие кодировки:
  * <em>ISO-8859-1</em>, <em>ISO-8859-15</em>,
  * <em>UTF-8</em>, <em>cp866</em>,
- * <em>cp1251</em>, <em>cp1252</em>, and
- * <em>KOI8-R</em> are effectively equivalent, provided the
- * <em><b>string</b></em> itself is valid for the encoding, as
- * the characters affected by  <b>htmlspecialchars()</b> occupy
- * the same positions in all of these encodings.
+ * <em>cp1251</em>, <em>cp1252</em>, и
+ * <em>KOI8-R</em> фактически эквивалентны, при условии, что
+ * <em><b>строка</b></em> сама допустима для кодировки, так как
+ * символы, на которые влияет <b>htmlspecialchars()</b> занимают
+ * одинаковые позиции во всех этих кодировках.
  * </p>
  * @param bool $double_encode [optional] <p>
- * When <em><b>double_encode</b></em> is turned off PHP will not
- * encode existing html entities, the default is to convert everything.
+ * Если параметр <em><b>double_encode</b></em> выключен, то PHP не будет преобразовывать существующие html-сущности.
+ * По умолчанию преобразуется все без ограничений.
  * </p>
- * @return string The converted string.
+ * @return string Преобразованная строка (string).
  */
 #[Pure]
 function htmlspecialchars(string $string, int $flags = ENT_QUOTES|ENT_SUBSTITUTE, ?string $encoding = 'UTF-8', bool $double_encode = true): string {}
 
 /**
- * Convert all applicable characters to HTML entities
+ * Преобразует все возможные символы в соответствующие HTML-сущности
  * @link https://php.net/manual/ru/function.htmlentities.php
  * @param string $string <p>
- * The input string.
+ * Входная строка.
  * </p>
  * @param int $flags [optional] <p>
- * Like htmlspecialchars, the optional second
- * quote_style parameter lets you define what will
- * be done with 'single' and "double" quotes. It takes on one of three
- * constants with the default being ENT_COMPAT:
+ * Битовая маска из нижеуказанных флагов, определяющих режим обработки кавычек,
+ * некорректных кодовых последовательностей и используемый тип документа.
+ * По умолчанию используется ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401.
  * <table>
- * Available quote_style constants
- * <tr valign="top">
- * <td>Constant Name</td>
- * <td>Description</td>
+ * <caption><b>Доступные значения параметра <em>flags</em></b></caption>
+ * <thead>
+ * <tr>
+ * <th>Название константы</th>
+ * <th>Описание</th>
  * </tr>
+ *
+ * </thead>
  * <tr valign="top">
  * <td>ENT_COMPAT</td>
- * <td>Will convert double-quotes and leave single-quotes alone.</td>
+ * <td>Преобразует двойные кавычки, одинарные кавычки не изменяются.</td>
  * </tr>
  * <tr valign="top">
  * <td>ENT_QUOTES</td>
- * <td>Will convert both double and single quotes.</td>
+ * <td>Преобразует как двойные, так и одинарные кавычки.</td>
  * </tr>
  * <tr valign="top">
  * <td>ENT_NOQUOTES</td>
- * <td>Will leave both double and single quotes unconverted.</td>
+ * <td>Оставляет без изменения как двойные, так и одинарные кавычки.</td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_IGNORE</b></td>
+ * <td>
+ * Без всяких уведомительных сообщений отбрасывает некорректные кодовые последовательности вместо возврата пустой строки.
+ * Использование этого флага не рекомендуется, так как это может привести к
+ * {@link https://unicode.org/reports/tr36/#Deletion_of_Noncharacters » негативным последствиям, связанным с безопасностью}.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_SUBSTITUTE</b></td>
+ * <td>
+ * Заменяет некорректные кодовые последовательности символом замены Юникода U+FFFD
+ * в случае использования UTF-8 или &amp;#FFFD; при использовании другой кодировки, вместо возврата пустой строки.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_DISALLOWED</b></td>
+ * <td>
+ * Заменяет неверные коды символов для заданного типа документа символом замены юникода U+FFFD (UTF-8) или &amp;#FFFD;
+ * (при использовании другой кодировки) вместо того, чтобы оставлять все как есть. Это может быть полезно, например,
+ * для того, чтобы убедиться в формальной правильности XML-документов со встроенным внешним контентом.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_SUBSTITUTE</b></td>
+ * <td>
+ * Заменяет некорректные кодовые последовательности символом замены Юникода U+FFFD
+ * в случае использования UTF-8 или &amp;#FFFD; при использовании другой кодировки, вместо возврата пустой строки.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_HTML401</b></td>
+ * <td>
+ * Обработка кода в соответствии с HTML 4.01.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_XML1</b></td>
+ * <td>
+ * Обработка кода в соответствии с XML 1.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_XHTML</b></td>
+ * <td>
+ * Обработка кода в соответствии с XHTML.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_HTML5</b></td>
+ * <td>
+ * Обработка кода в соответствии с HTML 5.
+ * </td>
  * </tr>
  * </table>
  * </p>
  * @param string|null $encoding [optional] <p>
- * Like htmlspecialchars, it takes an optional
- * third argument charset which defines character
- * set used in conversion.
- * Presently, the ISO-8859-1 character set is used as the default.
+ * Необязательный аргумент, определяющий кодировку, используемую при конвертации символов.
+ * В настоящее время по умолчанию используется набор символов ISO-8859-1.
  * </p>
  * @param bool $double_encode [optional] <p>
- * When double_encode is turned off PHP will not
- * encode existing html entities. The default is to convert everything.
+ * При выключении параметра double_encode, PHP не будет преобразовывать существующие html-сущности.
+ * По умолчанию преобразуется все без ограничений.
  * </p>
- * @return string the encoded string.
+ * @return string Возвращает преобразованную строку.
  */
 #[Pure]
 function htmlentities(string $string, int $flags = ENT_QUOTES|ENT_SUBSTITUTE, ?string $encoding, bool $double_encode = true): string {}
 
 /**
- * Convert HTML entities  to their corresponding characters
+ * Преобразует HTML-сущности в соответствующие им символы
  * @link https://php.net/manual/ru/function.html-entity-decode.php
  * @param string $string <p>
- * The input string.
+ * Входная строка.
  * </p>
  * @param int $flags [optional] <p>
- * The optional second quote_style parameter lets
- * you define what will be done with 'single' and "double" quotes. It takes
- * on one of three constants with the default being
- * ENT_COMPAT:
+ * Битовая маска, состоящая из одного или более флагов, которые указывают,
+ * как обращаться с кавычками и какой тип документа использовать.
+ * По умолчанию маска принимает значение ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401.
  * <table>
- * Available quote_style constants
- * <tr valign="top">
- * <td>Constant Name</td>
- * <td>Description</td>
+ * <caption><b>Константы <em>flags</em></b></caption>
+ * <thead>
+ * <tr>
+ * <th>Название константы</th>
+ * <th>Описание</th>
  * </tr>
+ * </thead>
+ *
  * <tr valign="top">
  * <td>ENT_COMPAT</td>
- * <td>Will convert double-quotes and leave single-quotes alone.</td>
+ * <td>Преобразуются двойные кавычки, одинарные остаются без изменений.</td>
  * </tr>
  * <tr valign="top">
  * <td>ENT_QUOTES</td>
- * <td>Will convert both double and single quotes.</td>
+ * <td>Преобразуются и двойные, и одинарные кавычки.</td>
  * </tr>
  * <tr valign="top">
  * <td>ENT_NOQUOTES</td>
- * <td>Will leave both double and single quotes unconverted.</td>
+ * <td>Оставить как двойные, так и одинарные кавычки без изменений.</td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_HTML401</b></td>
+ * <td>
+ * Обработка кода в соответствии с HTML 4.01.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_XML1</b></td>
+ * <td>
+ * Обработка кода в соответствии с XML 1.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_XHTML</b></td>
+ * <td>
+ * Обработка кода в соответствии с XHTML.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_HTML5</b></td>
+ * <td>
+ * Обработка кода в соответствии с HTML 5.
+ * </td>
  * </tr>
  * </table>
  * </p>
  * @param string|null $encoding [optional] <p>
- * The ISO-8859-1 character set is used as default for the optional third
- * charset. This defines the character set used in
- * conversion.
+ * Набор символов ISO-8859-1 используется по умолчанию для дополнительного третьего
+ * набор символов. Это определяет набор символов, используемый при преобразовании.
  * </p>
- * @return string the decoded string.
+ * @return string Возвращает раскодированную строку.
  */
 #[Pure]
 function html_entity_decode(string $string, int $flags = ENT_QUOTES|ENT_SUBSTITUTE, ?string $encoding): string {}
 
 /**
- * Convert special HTML entities back to characters
+ * Преобразует специальные HTML-сущности обратно в соответствующие символы
  * @link https://php.net/manual/ru/function.htmlspecialchars-decode.php
  * @param string $string <p>
- * The string to decode
+ * Строка, которую надо преобразовать.
  * </p>
  * @param int $flags [optional] <p>
- * The quote style. One of the following constants:
+ * Битовая маска из одного или нескольких следующих флагов, которые указывают как обрабатывать кавычки и какие типы документов использовать.
+ * Значением по умолчанию является ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401.
  * <table>
- * quote_style constants
- * <tr valign="top">
- * <td>Constant Name</td>
- * <td>Description</td>
+ * <caption><b>Доступные константы, используемые в качестве параметра <em>flags</em></b></caption>
+ * <thead>
+ * <tr>
+ * <th>Название константы</th>
+ * <th>Описание</th>
  * </tr>
+ * </thead>
+ *
+ * <tr valign="top">
  * <tr valign="top">
  * <td>ENT_COMPAT</td>
- * <td>Will convert double-quotes and leave single-quotes alone
- * (default)</td>
+ * <td>Преобразуются двойные кавычки, одинарные остаются без изменений.</td>
  * </tr>
  * <tr valign="top">
  * <td>ENT_QUOTES</td>
- * <td>Will convert both double and single quotes</td>
+ * <td>Преобразуются и двойные, и одинарные кавычки.</td>
  * </tr>
  * <tr valign="top">
  * <td>ENT_NOQUOTES</td>
- * <td>Will leave both double and single quotes unconverted</td>
+ * <td>Оставить как двойные, так и одинарные кавычки без изменений.</td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_SUBSTITUTE</b></td>
+ * <td>
+ * Заменяет некорректные кодовые последовательности символом замены Юникода U+FFFD
+ * в случае использования UTF-8 или &amp;#FFFD; при использовании другой кодировки, вместо возврата пустой строки.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_HTML401</b></td>
+ * <td>
+ * Обработка кода в соответствии с HTML 4.01.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_XML1</b></td>
+ * <td>
+ * Обработка кода в соответствии с XML 1.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_XHTML</b></td>
+ * <td>
+ * Обработка кода в соответствии с XHTML.
+ * </td>
+ * </tr>
+ *
+ * <tr>
+ * <td><b>ENT_HTML5</b></td>
+ * <td>
+ * Обработка кода в соответствии с HTML 5.
+ * </td>
  * </tr>
  * </table>
  * </p>
- * @return string the decoded string.
+ * @return string Возвращает преобразованную строку.
  */
 #[Pure]
 function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUBSTITUTE): string {}
 
 /**
- * Returns the translation table used by <function>htmlspecialchars</function> and <function>htmlentities</function>
+ * Возвращает таблицу преобразований, используемую функциями <function>htmlspecialchars</function> и <function>htmlentities</function>
  * @link https://php.net/manual/ru/function.get-html-translation-table.php
  * @param int $table [optional] <p>
- * There are two new constants (HTML_ENTITIES,
- * HTML_SPECIALCHARS) that allow you to specify the
- * table you want.
+ * Указывает, какую таблицу использовать для преобразований.
+ * Либо HTML_ENTITIES, либо HTML_SPECIALCHARS.
  * </p>
  * @param int $flags [optional] <p>
- * Like the htmlspecialchars and
- * htmlentities functions you can optionally specify
- * the quote_style you are working with.
- * See the description
- * of these modes in htmlspecialchars.
+ * Как и в функциях htmlspecialchars и
+ * htmlentities functions вы можете дополнительно указать
+ * quote_style, с которым вы работаете.
+ * Смотрите описание из htmlspecialchars.
  * </p>
  * @param string $encoding [optional] <p>
- * Encoding to use.
- * If omitted, the default value for this argument is ISO-8859-1 in
- * versions of PHP prior to 5.4.0, and UTF-8 from PHP 5.4.0 onwards.
+ * Кодировка для использования.
+ * Если этот параметр опущен, значение по умолчанию для этого аргумента равно ISO-8859-1 в
+ * версии PHP до 5.4.0 и UTF-8 начиная с PHP 5.4.0 и далее.
  * </p>
  *
  *
  * <p>
- * The following character sets are supported:
+ * Поддерживаются следующие кодировки:
  * </p><table class="doctable table">
- * <caption><strong>Supported charsets</strong></caption>
+ * <caption><strong>Поддерживаемые кодировки</strong></caption>
  *
  * <thead>
  * <tr>
- * <th>Charset</th>
- * <th>Aliases</th>
- * <th>Description</th>
+ * <th>Кодировка</th>
+ * <th>Псевдонимы</th>
+ * <th>Описание</th>
  * </tr>
  *
  * </thead>
@@ -595,7 +719,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>ISO-8859-1</td>
  * <td>ISO8859-1</td>
  * <td>
- * Western European, Latin-1.
+ * Западно-европейская Latin-1.
  * </td>
  * </tr>
  *
@@ -603,7 +727,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>ISO-8859-5</td>
  * <td>ISO8859-5</td>
  * <td>
- * Little used cyrillic charset (Latin/Cyrillic).
+ * Редко используемая кириллическая кодировка (Latin/Cyrillic).
  * </td>
  * </tr>
  *
@@ -611,8 +735,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>ISO-8859-15</td>
  * <td>ISO8859-15</td>
  * <td>
- * Western European, Latin-9. Adds the Euro sign, French and Finnish
- * letters missing in Latin-1 (ISO-8859-1).
+ * Западно-европейская Latin-9. Добавляет знак евро, французские и финские буквы к кодировке Latin-1 (ISO-8859-1).
  * </td>
  * </tr>
  *
@@ -620,7 +743,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>UTF-8</td>
  * <td class="empty">&nbsp;</td>
  * <td>
- * ASCII compatible multi-byte 8-bit Unicode.
+ * 8-битная Unicode, совместимая с ASCII.
  * </td>
  * </tr>
  *
@@ -628,7 +751,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>cp866</td>
  * <td>ibm866, 866</td>
  * <td>
- * DOS-specific Cyrillic charset.
+ * Кириллическая кодировка, применяемая в DOS.
  * </td>
  * </tr>
  *
@@ -636,7 +759,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>cp1251</td>
  * <td>Windows-1251, win-1251, 1251</td>
  * <td>
- * Windows-specific Cyrillic charset.
+ * Кириллическая кодировка, применяемая в Windows.
  * </td>
  * </tr>
  *
@@ -644,7 +767,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>cp1252</td>
  * <td>Windows-1252, 1252</td>
  * <td>
- * Windows specific charset for Western European.
+ * Западно-европейская кодировка, применяемая в Windows.
  * </td>
  * </tr>
  *
@@ -652,7 +775,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>KOI8-R</td>
  * <td>koi8-ru, koi8r</td>
  * <td>
- * Russian.
+ * Русская кодировка.
  * </td>
  * </tr>
  *
@@ -660,7 +783,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>BIG5</td>
  * <td>950</td>
  * <td>
- * Traditional Chinese, mainly used in Taiwan.
+ * Традиционный китайский, применяется в основном на Тайване.
  * </td>
  * </tr>
  *
@@ -668,7 +791,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>GB2312</td>
  * <td>936</td>
  * <td>
- * Simplified Chinese, national standard character set.
+ * Упрощённый китайский, стандартная национальная кодировка.
  * </td>
  * </tr>
  *
@@ -676,7 +799,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>BIG5-HKSCS</td>
  * <td class="empty">&nbsp;</td>
  * <td>
- * Big5 with Hong Kong extensions, Traditional Chinese.
+ * Расширенная Big5, применяемая в Гонконге.
  * </td>
  * </tr>
  *
@@ -684,7 +807,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>Shift_JIS</td>
  * <td>SJIS, SJIS-win, cp932, 932</td>
  * <td>
- * Japanese
+ * Японская кодировка.
  * </td>
  * </tr>
  *
@@ -692,7 +815,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>EUC-JP</td>
  * <td>EUCJP, eucJP-win</td>
  * <td>
- * Japanese
+ * Японская кодировка.
  * </td>
  * </tr>
  *
@@ -700,7 +823,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td>MacRoman</td>
  * <td class="empty">&nbsp;</td>
  * <td>
- * Charset that was used by Mac OS.
+ * Кодировка, используемая в Mac OS.
  * </td>
  * </tr>
  *
@@ -708,10 +831,10 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  * <td><em>''</em></td>
  * <td class="empty">&nbsp;</td>
  * <td>
- * An empty string activates detection from script encoding (Zend multibyte),
- * {@link https://php.net/manual/ru/ini.core.php#ini.default-charset default_charset} and current
- * locale {@link https://php.net/manual/ru/function.nl-langinfo.php nl_langinfo()} and
- * {@link https://php.net/manual/ru/function.setlocale.php setlocale()}), in this order. Not recommended.
+ * Пустая строка активирует режим определения кодировки из файла скрипта (Zend multibyte),
+ * {@link https://php.net/manual/ru/ini.core.php#ini.default-charset default_charset} и текущей локали
+ * (смотрите {@link https://php.net/manual/ru/function.nl-langinfo.php nl_langinfo()} и
+ * {@link https://php.net/manual/ru/function.setlocale.php setlocale()}) в указанном порядке. Не рекомендуется к использованию.
  * </td>
  * </tr>
  *
@@ -719,198 +842,175 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUB
  *
  * </table>
  *
- * <blockquote><p><strong>Note</strong>:
+ * <blockquote><p><strong>Замечание</strong>:
  *
- * Any other character sets are not recognized. The default encoding will be
- * used instead and a warning will be emitted.
+ * Остальные кодировки не поддерживаются, вместо них будет применена кодировка по умолчанию и сгенерировано предупреждение.
  *
  * </p></blockquote>
- * @return array the translation table as an array.
+ * @return array Возвращает таблицу преобразований в виде массива с оригинальными символами в качестве ключей и сущностями в качестве значений.
  */
 #[Pure]
 function get_html_translation_table(int $table, int $flags = ENT_QUOTES|ENT_SUBSTITUTE, string $encoding = "UTF-8"): array {}
 
 /**
- * Calculate the sha1 hash of a string
+ * Возвращает SHA1-хеш строки
  * @link https://php.net/manual/ru/function.sha1.php
  * @param string $string <p>
- * The input string.
+ * Входная строка.
  * </p>
  * @param bool $binary [optional] <p>
- * If the optional raw_output is set to true,
- * then the sha1 digest is instead returned in raw binary format with a
- * length of 20, otherwise the returned value is a 40-character
- * hexadecimal number.
+ * Если необязательный аргумент binary имеет значение true,
+ * хеш возвращается в виде бинарной строки из 20 символов, иначе он будет возвращён в виде 40-символьного шестнадцатеричного числа.
  * </p>
- * @return string the sha1 hash as a string.
+ * @return string Возвращает SHA1-хеш в виде строки.
  */
 #[Pure]
 function sha1(string $string, bool $binary = false): string {}
 
 /**
- * Calculate the sha1 hash of a file
+ * Возвращает SHA1-хеш файла
  * @link https://php.net/manual/ru/function.sha1-file.php
  * @param string $filename <p>
- * The filename
+ * Имя хешируемого файла.
  * </p>
  * @param bool $binary [optional] <p>
- * When true, returns the digest in raw binary format with a length of
- * 20.
+ * Если установлен в true, возвращает 20-символьный хеш в бинарном формате.
  * </p>
- * @return string|false a string on success, false otherwise.
+ * @return string|false Возвращает строку в случае успешного выполнения, иначе возвращается false.
  */
 #[Pure]
 function sha1_file(string $filename, bool $binary = false): string|false {}
 
 /**
- * Calculate the md5 hash of a string
+ * Возвращает MD5-хеш строки
  * @link https://php.net/manual/ru/function.md5.php
  * @param string $string <p>
- * The string.
+ * Строка.
  * </p>
  * @param bool $binary [optional] <p>
- * If the optional raw_output is set to true,
- * then the md5 digest is instead returned in raw binary format with a
- * length of 16.
+ * Если необязательный аргумент binary имеет значение true, то возвращается бинарная строка из 16 символов.
  * </p>
- * @return string the hash as a 32-character hexadecimal number.
+ * @return string Возвращает хеш в виде 32-символьного шестнадцатеричного числа.
  */
 #[Pure]
 function md5(string $string, bool $binary = false): string {}
 
 /**
- * Calculates the md5 hash of a given file
+ * Возвращает MD5-хеш файла
  * @link https://php.net/manual/ru/function.md5-file.php
  * @param string $filename <p>
- * The filename
+ * Имя файла
  * </p>
  * @param bool $binary [optional] <p>
- * When true, returns the digest in raw binary format with a length of
- * 16.
+ * Если имеет значение true, то возвращается бинарная строка из 16 символов.
  * </p>
- * @return string|false a string on success, false otherwise.
+ * @return string|false Возвращает строку в случае успешного выполнения, иначе false.
  */
 #[Pure]
 function md5_file(string $filename, bool $binary = false): string|false {}
 
 /**
- * Calculates the crc32 polynomial of a string
+ * Вычисляет полином CRC32 для строки
  * @link https://php.net/manual/ru/function.crc32.php
  * @param string $string <p>
- * The data.
+ * Данные.
  * </p>
- * @return int the crc32 checksum of str as an integer..1
+ * @return int Возвращает контрольную сумму crc32 строки string в виде целого числа.
  */
 #[Pure]
 function crc32(string $string): int {}
 
 /**
- * Parse a binary IPTC block into single tags.
- * Note: This function does not require the GD image library.
+ * Разбор двоичных IPTC данных на отдельные теги
+ * Замечание: Этой функции не требуется библиотека GD.
  * @link https://php.net/manual/ru/function.iptcparse.php
  * @param string $iptc_block <p>
- * A binary IPTC block.
+ * Двоичные данные IPTC.
  * </p>
- * @return array|false an array using the tagmarker as an index and the value as the
- * value. It returns false on error or if no IPTC data was found.
+ * @return array|false Возвращает массив значений тегов, используя метки тегов в качестве индекса.
+ * Возвращает false в случае возникновения ошибки, а также если IPTC данные отсутствуют.
  */
 #[Pure]
 function iptcparse(string $iptc_block): array|false {}
 
 /**
- * Embeds binary IPTC data into a JPEG image.
- * Note: This function does not require the GD image library.
+ * Встраивание двоичных IPTC данных в JPEG изображение
+ * Замечание: Этой функции не требуется библиотека GD.
  * @link https://php.net/manual/ru/function.iptcembed.php
  * @param string $iptc_data <p>
- * The data to be written.
+ * Данные.
  * </p>
  * @param string $filename <p>
- * Path to the JPEG image.
+ * Путь к JPEG изображению.
  * </p>
  * @param int $spool [optional] <p>
- * Spool flag. If the spool flag is over 2 then the JPEG will be
- * returned as a string.
+ * Если значение этого флага больше 2, то JPEG будет возвращён в виде строки. В противном случае, JPEG будет напечатан в STDOUT.
  * </p>
- * @return string|bool If success and spool flag is lower than 2 then the JPEG will not be
- * returned as a string, false on errors.
+ * @return string|bool Если spool меньше 2, будет возвращён JPEG или false в случае возникновения ошибки.
+ * В противном случае true в случае успешного выполнения или false в случае возникновения ошибки.
  */
 function iptcembed(string $iptc_data, string $filename, int $spool): string|bool {}
 
 /**
- * Get the size of an image
+ * Получение размера изображения
  * @link https://php.net/manual/ru/function.getimagesize.php
  * @param string $filename <p>
- * This parameter specifies the file you wish to retrieve information
- * about. It can reference a local file or (configuration permitting) a
- * remote file using one of the supported streams.
+ * Этот аргумент задаёт файл, сведения о котором будут извлекаться.
+ * Это может быть локальный или удалённый (зависит от конфигурации) файл.
+ * Передача данных удалённого файла должна осуществляться одним из поддерживаемых потоков.
  * </p>
  * @param array &$image_info [optional] <p>
- * This optional parameter allows you to extract some extended
- * information from the image file. Currently, this will return the
- * different JPG APP markers as an associative array.
- * Some programs use these APP markers to embed text information in
- * images. A very common one is to embed
- * IPTC information in the APP13 marker.
- * You can use the iptcparse function to parse the
- * binary APP13 marker into something readable.
+ * Этот необязательный аргумент позволяет извлечь некоторые расширенные сведения из файла изображения.
+ * На данный момент можно получать различные JPG APP маркеры в виде ассоциативного массива.
+ * Некоторые программы используют эти маркеры для встраивания текста в картинку.
+ * Наиболее часто встраивают » IPTC сведения в APP13 маркер.
+ * Для преобразования двоичных данных APP13 маркера во что-то удобочитаемое можно воспользоваться функцией iptcparse().
  * </p>
- * @return array|false an array with 7 elements.
+ * @return array|false Возвращает массив из 7 элементов. Не все типы изображений содержат элементы с каналами (channels) и битрейтом (bits).
  * <p>
- * Index 0 and 1 contains respectively the width and the height of the image.
+ * Индексы 0 и 1 содержат ширину и высоту изображения.
  * </p>
  * <p>
- * Some formats may contain no image or may contain multiple images. In these
- * cases, getimagesize might not be able to properly
- * determine the image size. getimagesize will return
- * zero for width and height in these cases.
+ * Некоторые форматы файлов могут хранить несколько изображений или не содержать изображения вообще.
+ * В таких случаях getimagesize() не сможет определить размер изображения. getimagesize() вернёт нули в качестве значений высоты и ширины.
  * </p>
  * <p>
- * Index 2 is one of the IMAGETYPE_XXX constants indicating
- * the type of the image.
+ * Индекс 2 содержит одну из констант типа изображения IMAGETYPE_XXX.
  * </p>
  * <p>
- * Index 3 is a text string with the correct
- * height="yyy" width="xxx" string that can be used
- * directly in an IMG tag.
+ * Индекс 3 содержит строку со значениями ширины и высоты изображения height="yyy" width="xxx", которая может быть использована внутри IMG тега.
  * </p>
  * <p>
- * mime is the correspondant MIME type of the image.
- * This information can be used to deliver images with correct the HTTP
- * Content-type header:
- * getimagesize and MIME types
+ * mime - соответствующий MIME-тип изображения. Эти сведения используются для корректной обработки изображения на основании заголовка Content-type:
  * </p>
  * <p>
- * channels will be 3 for RGB pictures and 4 for CMYK
- * pictures.
+ * channels принимает значение 3 для RGB картинок и 4 для CMYK.
  * </p>
  * <p>
- * bits is the number of bits for each color.
+ * bits - глубина цвета, число бит для каждого цвета.
  * </p>
  * <p>
- * For some image types, the presence of channels and
- * bits values can be a bit
- * confusing. As an example, GIF always uses 3 channels
- * per pixel, but the number of bits per pixel cannot be calculated for an
- * animated GIF with a global color table.
+ * Для некоторых типов изображений наличие значений channels и bits может сбить с толку.
+ * Например, GIF всегда использует 3 канала на пиксель, но глубину цвета невозможно вычислить для анимированных GIF изображений с общей таблицей цветов.
  * </p>
  * <p>
- * On failure, false is returned.
+ * В случае возникновения ошибки функция вернёт false.
  * </p>
  */
 function getimagesize(string $filename, &$image_info): array|false {}
 
 /**
- * Get Mime-Type for image-type returned by getimagesize, exif_read_data, exif_thumbnail, exif_imagetype
+ * Получение Mime-типа для типа изображения, возвращаемого функциями getimagesize, exif_read_data, exif_thumbnail, exif_imagetype
  * @link https://php.net/manual/ru/function.image-type-to-mime-type.php
  * @param int $image_type <p>
- * One of the IMAGETYPE_XXX constants.
+ * Одна из констант IMAGETYPE_XXX.
  * </p>
- * @return string The returned values are as follows
+ * @return string Возвращаемые значения приведены ниже
  * <table>
- * Returned values Constants
+ * Возвращаемые значения и Константы
  * <tr valign="top">
- * <td>imagetype</td>
- * <td>Returned value</td>
+ * <td>image_type</td>
+ * <td>Возвращаемое значение</td>
  * </tr>
  * <tr valign="top">
  * <td>IMAGETYPE_GIF</td>
@@ -937,12 +1037,12 @@ function getimagesize(string $filename, &$image_info): array|false {}
  * <td>image/bmp</td>
  * </tr>
  * <tr valign="top">
- * <td>IMAGETYPE_TIFF_II (intel byte order)</td>
+ * <td>IMAGETYPE_TIFF_II (порядок байт intel)</td>
  * <td>image/tiff</td>
  * </tr>
  * <tr valign="top">
  * <td>
- * IMAGETYPE_TIFF_MM (motorola byte order)
+ * IMAGETYPE_TIFF_MM (порядок байт motorola)
  * </td>
  * <td>image/tiff</td>
  * </tr>
@@ -988,187 +1088,172 @@ function getimagesize(string $filename, &$image_info): array|false {}
 function image_type_to_mime_type(int $image_type): string {}
 
 /**
- * Get file extension for image type
+ * Получение расширения файла для типа изображения
  * @link https://php.net/manual/ru/function.image-type-to-extension.php
  * @param int $image_type <p>
- * One of the IMAGETYPE_XXX constant.
+ * Одна из констант IMAGETYPE_XXX.
  * </p>
  * @param bool $include_dot [optional] <p>
- * Removed since 8.0.
- * Whether to prepend a dot to the extension or not. Default to true.
+ * Удален в 8.0.
+ * Добавлять точку к расширению или нет. По умолчанию true.
  * </p>
- * @return string|false A string with the extension corresponding to the given image type.
+ * @return string|false Строка с расширением файла, соответствующим типу изображения или false в случае возникновения ошибки.
  */
 #[Pure]
 function image_type_to_extension(int $image_type, bool $include_dot = true): string|false {}
 
 /**
- * Outputs information about PHP's configuration
+ * Выводит информацию о текущей конфигурации PHP
  * @link https://php.net/manual/ru/function.phpinfo.php
  * @param int $flags [optional] <p>
- * The output may be customized by passing one or more of the
- * following constants bitwise values summed
- * together in the optional what parameter.
- * One can also combine the respective constants or bitwise values
- * together with the or operator.
+ * Вывод функции можно настраивать, передавая битовую маску из одной или более приведённых ниже констант (constants).
+ * Эта маска передаётся в качестве необязательного аргумента flags.
+ * Отдельные константы или битовые значения можно комбинировать с помощью оператора побитового оператора ИЛИ.
  * </p>
  * <p>
  * <table>
- * phpinfo options
+ * Настройки phpinfo()
  * <tr valign="top">
- * <td>Name (constant)</td>
- * <td>Value</td>
- * <td>Description</td>
+ * <td>Имя (константа)</td>
+ * <td>Значение</td>
+ * <td>Описание</td>
  * </tr>
  * <tr valign="top">
  * <td>INFO_GENERAL</td>
  * <td>1</td>
  * <td>
- * The configuration line, "php.ini" location, build date, Web
- * Server, System and more.
+ * Строка конфигурации, расположение php.ini, дата сборки, сервер, система и др.
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>INFO_CREDITS</td>
  * <td>2</td>
  * <td>
- * PHP Credits. See also phpcredits.
+ * Разработчики PHP. Смотрите также phpcredits().
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>INFO_CONFIGURATION</td>
  * <td>4</td>
  * <td>
- * Current Local and Main values for PHP directives. See
- * also ini_get.
+ * Текущие значение основных и локальных PHP директив. Смотрите также ini_get().
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>INFO_MODULES</td>
  * <td>8</td>
  * <td>
- * Loaded modules and their respective settings. See also
- * get_loaded_extensions.
+ * Загруженные модули и их настройки. Смотрите также get_loaded_extensions().
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>INFO_ENVIRONMENT</td>
  * <td>16</td>
  * <td>
- * Environment Variable information that's also available in
- * $_ENV.
+ * Информация о переменных окружения, которая также доступна в $_ENV.
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>INFO_VARIABLES</td>
  * <td>32</td>
  * <td>
- * Shows all
- * predefined variables from EGPCS (Environment, GET,
- * POST, Cookie, Server).
+ * Выводит все предопределённые переменные из EGPCS (Environment, GET, POST, Cookie, Server).
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>INFO_LICENSE</td>
  * <td>64</td>
  * <td>
- * PHP License information. See also the license FAQ.
+ * Информация о лицензии PHP. Смотрите также » license FAQ.
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>INFO_ALL</td>
  * <td>-1</td>
  * <td>
- * Shows all of the above.
+ * Выводит все приведённое выше.
  * </td>
  * </tr>
  * </table>
  * </p>
- * @return bool true on success or false on failure.
+ * @return bool Возвращает true в случае успешного выполнения или false в случае возникновения ошибки.
  */
 function phpinfo(#[ExpectedValues(flags: [INFO_GENERAL, INFO_CREDITS, INFO_CONFIGURATION, INFO_MODULES, INFO_ENVIRONMENT, INFO_VARIABLES, INFO_LICENSE, INFO_ALL])] int $flags = INFO_ALL): bool {}
 
 /**
- * Gets the current PHP version
+ * Получает текущую версию PHP
  * @link https://php.net/manual/ru/function.phpversion.php
  * @param string|null $extension [optional] <p>
- * An optional extension name.
+ * Необязательное имя модуля.
  * </p>
- * @return string|false If the optional extension parameter is
- * specified, phpversion returns the version of that
- * extension, or false if there is no version information associated or
- * the extension isn't enabled.
+ * @return string|false Возвращает текущую версию PHP в виде строки (string).
+ * Если в параметре extension указано строковое значение (string), phpversion() вернёт версию этого модуля или false,
+ * если информации о версии нет или модуль в данный момент не включён.
  */
 #[Pure]
 function phpversion(?string $extension): string|false {}
 
 /**
- * Prints out the credits for PHP
+ * Выводит список разработчиков PHP
  * @link https://php.net/manual/ru/function.phpcredits.php
  * @param int $flags [optional] <p>
- * To generate a custom credits page, you may want to use the
- * flag parameter.
+ * Использование аргумента flags позволяет произвольно компоновать информацию об отдельных группах разработчиков.
  * </p>
  * <p>
  * <table>
- * Pre-defined phpcredits flags
+ * Предопределённые флаги phpcredits()
  * <tr valign="top">
- * <td>name</td>
- * <td>description</td>
+ * <td>Имя</td>
+ * <td>Описание</td>
  * </tr>
  * <tr valign="top">
  * <td>CREDITS_ALL</td>
  * <td>
- * All the credits, equivalent to using: CREDITS_DOCS +
- * CREDITS_GENERAL + CREDITS_GROUP +
- * CREDITS_MODULES + CREDITS_FULLPAGE.
- * It generates a complete stand-alone HTML page with the appropriate tags.
+ * Все разработчики, эквивалентно использованию: CREDITS_DOCS + CREDITS_GENERAL + CREDITS_GROUP + CREDITS_MODULES + CREDITS_FULLPAGE.
+ * В этом случае будет сгенерирована полностью независимая HTML-страница с соответствующими тэгами.
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>CREDITS_DOCS</td>
- * <td>The credits for the documentation team</td>
+ * <td>Участники команды документирования</td>
  * </tr>
  * <tr valign="top">
  * <td>CREDITS_FULLPAGE</td>
  * <td>
- * Usually used in combination with the other flags. Indicates
- * that a complete stand-alone HTML page needs to be
- * printed including the information indicated by the other
- * flags.
+ * Обычно используется в комбинации с другими флагами.
+ * Указывает на то, что независимая HTML страница должна содержать информацию других флагов.
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>CREDITS_GENERAL</td>
  * <td>
- * General credits: Language design and concept, PHP 4.0
- * authors and SAPI module.
+ * Главные разработчики: Концепция и дизайн языка, авторы PHP и модуля SAPI.
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>CREDITS_GROUP</td>
- * <td>A list of the core developers</td>
+ * <td>Список разработчиков ядра языка</td>
  * </tr>
  * <tr valign="top">
  * <td>CREDITS_MODULES</td>
  * <td>
- * A list of the extension modules for PHP, and their authors
+ * Список модулей для PHP и их авторов
  * </td>
  * </tr>
  * <tr valign="top">
  * <td>CREDITS_SAPI</td>
  * <td>
- * A list of the server API modules for PHP, and their authors
+ * Список модулей серверных API и их авторов
  * </td>
  * </tr>
  * </table>
  * </p>
- * @return bool true on success or false on failure.
+ * @return bool Возвращает true в случае успешного выполнения или false в случае возникновения ошибки.
  */
 function phpcredits(int $flags = CREDITS_ALL): bool {}
 
 /**
- * Gets the logo guid
+ * Получает руководство по логотипу
  * @removed 5.5
  * @link https://php.net/manual/ru/function.php-logo-guid.php
  * @return string PHPE9568F34-D428-11d2-A769-00AA001ACF42.
@@ -1187,7 +1272,7 @@ function php_real_logo_guid() {}
 function php_egg_logo_guid() {}
 
 /**
- * Gets the Zend guid
+ * Получает руководство по Zend
  * @removed 5.5
  * @link https://php.net/manual/ru/function.zend-logo-guid.php
  * @return string PHPE9568F35-D428-11d2-A769-00AA001ACF42.
@@ -1195,205 +1280,175 @@ function php_egg_logo_guid() {}
 function zend_logo_guid(): string {}
 
 /**
- * Returns the type of interface between web server and PHP
+ * Возвращает тип интерфейса между веб-сервером и PHP
  * @link https://php.net/manual/ru/function.php-sapi-name.php
- * @return string|false the interface type, as a lowercase string.
+ * @return string|false Возвращает тип интерфейса в виде строки в нижнем регистре или false в случае возникновения ошибки.
  * <p>
- * Although not exhaustive, the possible return values include
- * aolserver, apache,
- * apache2filter, apache2handler,
- * caudium, cgi (until PHP 5.3),
- * cgi-fcgi, cli,
- * continuity, embed,
- * isapi, litespeed,
- * milter, nsapi,
- * phttpd, pi3web, roxen,
- * thttpd, tux, and webjames.
+ * Возможные возвращаемые значения (список может быть неполным): apache, apache2handler, cgi (до PHP 5.3), cgi-fcgi, cli, cli-server, embed, fpm-fcgi, litespeed, phpdbg.
  * </p>
  */
 #[Pure]
 function php_sapi_name(): string|false {}
 
 /**
- * Returns information about the operating system PHP is running on
+ * Возвращает информацию об операционной системе, на которой запущен PHP
  * @link https://php.net/manual/ru/function.php-uname.php
  * @param string $mode [optional] <p>
- * mode is a single character that defines what
- * information is returned:
- * 'a': This is the default. Contains all modes in
- * the sequence "s n r v m".</p>
- * @return string the description, as a string.
+ * mode - одиночный символ, определяющий, какая информация будет выводиться:
+ * <p>'a': По умолчанию. Содержит все режимы в следующей последовательности "s n r v m".</p>
+ * <p>'s': Название операционной системы, например, FreeBSD.</p>
+ * <p>'n': Имя хоста, например, localhost.example.com.</p>
+ * <p>'r': Номер релиза, например, 5.1.2-RELEASE.</p>
+ * <p>'v': Информация о версии. Может сильно различаться в разных ОС.</p>
+ * <p>'m': Архитектура процессора, например, i386.</p>
+ * @return string Возвращает описание ОС в виде строки.
  */
 #[Pure]
 function php_uname(string $mode = 'a'): string {}
 
 /**
- * Return a list of .ini files parsed from the additional ini dir
+ * Возвращает список .ini-файлов, найденных в дополнительной ini-директории
  * @link https://php.net/manual/ru/function.php-ini-scanned-files.php
- * @return string|false a comma-separated string of .ini files on success. Each comma is
- * followed by a newline. If the directive --with-config-file-scan-dir wasn't set,
- * false is returned. If it was set and the directory was empty, an
- * empty string is returned. If a file is unrecognizable, the file will
- * still make it into the returned string but a PHP error will also result.
- * This PHP error will be seen both at compile time and while using
- * php_ini_scanned_files.
+ * @return string|false При успехе возвращает строку с разделёнными запятыми именами .ini-файлов.
+ * За каждой запятой следует новая строка. Если директива --with-config-file-scan-dir не задана и переменная окружения PHP_INI_SCAN_DIR тоже не задана,
+ * функция вернёт false. Если директива задана и она пуста, будет возвращена пустая строка.
+ * Если файл не удаётся распознать, он всё же будет включён в список, но при этом PHP сообщит об ошибке.
+ * Эта ошибка будет возникать как при компиляции, так и во время работы php_ini_scanned_files().
  */
 #[Pure]
 function php_ini_scanned_files(): string|false {}
 
 /**
- * Retrieve a path to the loaded php.ini file
+ * Получить путь к загруженному файлу php.ini
  * @link https://php.net/manual/ru/function.php-ini-loaded-file.php
- * @return string|false The loaded "php.ini" path, or false if one is not loaded.
+ * @return string|false Путь к загруженному файлу php.ini или false, если файл не загружен.
  * @since 5.2.4
  */
 #[Pure]
 function php_ini_loaded_file(): string|false {}
 
 /**
- * String comparisons using a "natural order" algorithm
+ * Сравнение строк с использованием алгоритма "natural order"
  * @link https://php.net/manual/ru/function.strnatcmp.php
  * @param string $string1 <p>
- * The first string.
+ * Первая строка.
  * </p>
  * @param string $string2 <p>
- * The second string.
+ * Вторая строка.
  * </p>
- * @return int Similar to other string comparison functions, this one returns &lt; 0 if
- * str1 is less than str2; &gt;
- * 0 if str1 is greater than
- * str2, and 0 if they are equal.
+ * @return int
+ * Подобно другим функциям сравнения строк, данная функция возвращает отрицательное число, если string1 &lt; string2,
+ * положительное число, если string1 &gt; string2, и 0 если строки равны.
  */
 #[Pure]
 function strnatcmp(string $string1, string $string2): int {}
 
 /**
- * Case insensitive string comparisons using a "natural order" algorithm
+ * Сравнение строк без учёта регистра с использованием алгоритма "natural order"
  * @link https://php.net/manual/ru/function.strnatcasecmp.php
  * @param string $string1 <p>
- * The first string.
+ * Первая строка.
  * </p>
  * @param string $string2 <p>
- * The second string.
+ * Вторая строка.
  * </p>
- * @return int Similar to other string comparison functions, this one returns &lt; 0 if
- * str1 is less than str2 &gt;
- * 0 if str1 is greater than
- * str2, and 0 if they are equal.
+ * @return int
+ * Подобно другим функциям сравнения строк, данная функция возвращает отрицательное число,
+ * если string1 &lt; string2, положительное число, если string1 &gt; string2, и 0, если строки равны.
  */
 #[Pure]
 function strnatcasecmp(string $string1, string $string2): int {}
 
 /**
- * Count the number of substring occurrences
+ * Возвращает число вхождений подстроки
  * @link https://php.net/manual/ru/function.substr-count.php
  * @param string $haystack <p>
- * The string to search in
+ * Строка, в которой ведётся поиск
  * </p>
  * @param string $needle <p>
- * The substring to search for
+ * Искомая подстрока
  * </p>
  * @param int $offset [optional] <p>
- * The offset where to start counting
+ * Смещение начала отсчёта. Если задано отрицательное значение, отсчёт позиции будет произведён с конца строки.
  * </p>
  * @param int|null $length [optional] <p>
- * The maximum length after the specified offset to search for the
- * substring. It outputs a warning if the offset plus the length is
- * greater than the haystack length.
+ * Максимальная длина строки, в которой будет производится поиск подстроки после указанного смещения.
+ * Если сумма смещения и максимальной длины будет больше длины haystack, то будет выведено предупреждение.
+ * Отрицательное значение будет отсчитываться с конца haystack.
  * </p>
- * @return int This functions returns an integer.
+ * @return int Эта функция возвращает целое число (int).
  */
 #[Pure]
 function substr_count(string $haystack, string $needle, int $offset, ?int $length): int {}
 
 /**
- * Finds the length of the initial segment of a string consisting
- * entirely of characters contained within a given mask.
+ * Возвращает длину участка в начале строки, полностью соответствующего маске
  * @link https://php.net/manual/ru/function.strspn.php
  * @param string $string <p>
- * The string to examine.
+ * Исследуемая строка.
  * </p>
  * @param string $characters <p>
- * The list of allowable characters to include in counted segments.
+ * Список из разрешённых символов.
  * </p>
  * @param int $offset [optional] <p>
- * The position in subject to
- * start searching.
+ * Позиция начала поиска в subject.
  * </p>
  * <p>
- * If start is given and is non-negative,
- * then strspn will begin
- * examining subject at
- * the start'th position. For instance, in
- * the string 'abcdef', the character at
- * position 0 is 'a', the
- * character at position 2 is
- * 'c', and so forth.
+ * Если offset указан и неотрицателен, то strspn() начнёт искать в строке string, начиная с позиции offset.
+ * К примеру, в строке 'abcdef', символом с позицией 0 является 'a', символом с позицией 2 является 'c' и т.д.
  * </p>
  * <p>
- * If start is given and is negative,
- * then strspn will begin
- * examining subject at
- * the start'th position from the end
- * of subject.
+ * Если offset указан и отрицателен, то strspn() начнёт поиск в строке string с позиции, отстоящей на offset символов с конца string.
  * </p>
  * @param int|null $length [optional] <p>
- * The length of the segment from subject
- * to examine.
+ * Длина исследуемого фрагмента string.
  * </p>
  * <p>
- * If length is given and is non-negative,
- * then subject will be examined
- * for length characters after the starting
- * position.
+ * Если length указан и неотрицателен, то строка string будет исследована в течение length после стартовой позиции.
  * </p>
  * <p>
- * If lengthis given and is negative,
- * then subject will be examined from the
- * starting position up to length
- * characters from the end of subject.
+ * Если length указан и отрицателен, то строка string будет исследована начиная со стартовой позиции до позиции, отстоящей на length символов с конца string.
  * </p>
- * @return int the length of the initial segment of str1
- * which consists entirely of characters in str2.
+ * @return int Возвращает длину первого участка string, состоящего целиком из символов в characters.
  */
 #[Pure]
 function strspn(string $string, string $characters, int $offset, ?int $length): int {}
 
 /**
- * Find length of initial segment not matching mask
+ * Возвращает длину участка в начале строки, не соответствующего маске
  * @link https://php.net/manual/ru/function.strcspn.php
  * @param string $string <p>
- * The first string.
+ * Строка для исследования.
  * </p>
  * @param string $characters <p>
- * The second string.
+ * Строка, содержащая каждый из запрещённых символов.
  * </p>
  * @param int $offset [optional] <p>
- * The start position of the string to examine.
+ * Позиция в строке string, с которой начинается поиск.
  * </p>
  * @param int|null $length [optional] <p>
- * The length of the string to examine.
+ * Длина фрагмента из string для обследования.
  * </p>
- * @return int the length of the segment as an integer.
+ * @return int Возвращает длину начального фрагмента строки string, которая состоит полностью из символов, не включённых в параметр characters.
  */
 #[Pure]
 function strcspn(string $string, string $characters, int $offset, ?int $length): int {}
 
 /**
- * Tokenize string
- * Note that only the first call to strtok uses the string argument.
- * Every subsequent call to strtok only needs the token to use, as it keeps track of where it is in the current string.
- * To start over, or to tokenize a new string you simply call strtok with the string argument again to initialize it.
- * Note that you may put multiple tokens in the token parameter.
- * The string will be tokenized when any one of the characters in the argument are found.
+ * Разбивает строку на токены
+ * Замечание: Функция ведёт себя немного иначе, чем можно было бы ожидать, знакомясь с explode().
+ * Во-первых, последовательность из двух или более смежных символов token в анализируемой строке считается одним разделителем.
+ * Также игнорируется token, расположенный в начале или конце строки. Например, если используется строка ";aaa;;bbb;",
+ * последовательные вызовы strtok() с ";" в качестве token вернут строки "aaa" и "bbb", а затем false.
+ * В результате строка будет разделена только на два элемента, а explode(";", $string) вернёт массив из 5 элементов.
  * @link https://php.net/manual/ru/function.strtok.php
  * @param string $string <p>
- * The string being split up into smaller strings (tokens).
+ * Строка (string), разбиваемая на подстроки (токены).
  * </p>
  * @param string|null $token <p>
- * The delimiter used when splitting up str.
+ * Разделитель строки string.
  * </p>
- * @return string|false A string token.
+ * @return string|false Токен в виде строки (string) или false, если токенов больше нет.
  */
 function strtok(
     string $string,
